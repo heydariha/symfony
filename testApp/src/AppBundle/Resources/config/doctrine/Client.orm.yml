@@ -1,0 +1,26 @@
+AppBundle\Entity\Client:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\ClientRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: '100'
+        releaseDate:
+            type: date
+            nullable: true
+            column: release_date
+        length:
+            type: integer
+            nullable: true
+        gener:
+            type: string
+            length: '100'
+            nullable: true
+    lifecycleCallbacks: {  }
