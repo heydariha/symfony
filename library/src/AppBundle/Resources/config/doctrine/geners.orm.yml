@@ -14,3 +14,7 @@ AppBundle\Entity\geners:
             length: '50'
             unique: true
     lifecycleCallbacks: {  }
+	oneToMany:
+		book_genre:
+			targetEntity: Book_genre
+			mappedBy: genres

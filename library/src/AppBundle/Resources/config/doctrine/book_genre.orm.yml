@@ -16,3 +16,16 @@ AppBundle\Entity\book_genre:
             type: smallint
             column: genre_id
     lifecycleCallbacks: {  }
+	manyToOne:
+		genere:
+			targetEntity: Genere
+			inversedBy:book_genre
+			joinColumn:
+				name: gener_id
+				referencedColumnName: id
+		books:
+			targetEntity: Books
+			inversedBy:book_genre
+			joinColumn:
+				name: book_id
+				referencedColumnName: id
