@@ -1,0 +1,18 @@
+AppBundle\Entity\book_genre:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\book_genreRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        bookId:
+            type: smallint
+            column: book_id
+        genreId:
+            type: smallint
+            column: genre_id
+    lifecycleCallbacks: {  }
