@@ -1,0 +1,23 @@
+AppBundle\Entity\Client:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\ClientRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        bname:
+            type: string
+            length: 255
+        breleased:
+            type: date
+        blength:
+            type: integer
+    lifecycleCallbacks: {  }
+    oneToMany:
+         relation:
+            targetEntity: Relations
+            mappedBy: client

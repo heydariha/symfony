@@ -1,0 +1,29 @@
+AppBundle\Entity\Relations:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\RelationsRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        relDate:
+            type: date
+            nullable: true
+            column: rel_date
+    lifecycleCallbacks: {  }
+    manyToOne:
+        client:
+            targetEntity: Client
+            inversedBy: relation
+            joinColumn:
+                name: client_id
+                referenceColumnName: id
+        genre:
+            targetEntity: Genre
+            inversedBy: relation
+            joinColumn:
+                name: genre_id
+                referenceColumnName: id

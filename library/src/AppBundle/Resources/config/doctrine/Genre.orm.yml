@@ -1,0 +1,19 @@
+AppBundle\Entity\Genre:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\GenreRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        gname:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }
+    oneToMany:
+        relation:
+            targetEntity: Relations
+            mappedBy: genre
