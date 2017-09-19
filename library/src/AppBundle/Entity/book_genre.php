@@ -81,4 +81,3 @@ class book_genre
         return $this->genreId;
     }
 }
-

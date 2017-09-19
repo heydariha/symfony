@@ -139,4 +139,3 @@ class users
         return $this->password;
     }
 }
-

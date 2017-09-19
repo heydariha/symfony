@@ -8,24 +8,15 @@ AppBundle\Entity\book_genre:
             id: true
             generator:
                 strategy: AUTO
-    fields:
-        bookId:
-            type: smallint
-            column: book_id
-        genreId:
-            type: smallint
-            column: genre_id
     lifecycleCallbacks: {  }
-	manyToOne:
-		genere:
-			targetEntity: Genere
-			inversedBy:book_genre
-			joinColumn:
-				name: gener_id
-				referencedColumnName: id
-		books:
-			targetEntity: Books
-			inversedBy:book_genre
-			joinColumn:
-				name: book_id
-				referencedColumnName: id
+    manyToOne:
+    geners:
+        targetEntity: Geners
+        joinColumn:
+            name: gener_id
+            referencedColumnName: id
+    books:
+        targetEntity: Books
+        joinColumn:
+            name: book_id
+            referencedColumnName: id

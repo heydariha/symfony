@@ -110,4 +110,3 @@ class books
         return $this->length;
     }
 }
-

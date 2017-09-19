@@ -52,4 +52,3 @@ class geners
         return $this->genre;
     }
 }
-

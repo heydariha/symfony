@@ -22,7 +22,7 @@ AppBundle\Entity\books:
             type: integer
             nullable: true
     lifecycleCallbacks: {  }
-	oneToMany:
-		book_genre:
-			targetEntity: Book_genre
-			mappedBy: books
+oneToMany:
+book_genre:
+targetEntity: Book_genre
+mappedBy: books
