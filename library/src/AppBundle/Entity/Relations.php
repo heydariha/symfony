@@ -52,9 +52,9 @@ class Relations
         return $this->relDate;
     }
     /**
-     * @var \AppBundle\Entity\Client
+     * @var \AppBundle\Entity\Book
      */
-    private $client;
+    private $book;
 
     /**
      * @var \AppBundle\Entity\Genre
@@ -63,27 +63,27 @@ class Relations
 
 
     /**
-     * Set client
+     * Set book
      *
-     * @param \AppBundle\Entity\Client $client
+     * @param \AppBundle\Entity\Book $book
      *
      * @return Relations
      */
-    public function setClient(\AppBundle\Entity\Client $client = null)
+    public function setBook(\AppBundle\Entity\Book $book = null)
     {
-        $this->client = $client;
+        $this->book = $book;
 
         return $this;
     }
 
     /**
-     * Get client
+     * Get book
      *
-     * @return \AppBundle\Entity\Client
+     * @return \AppBundle\Entity\Book
      */
-    public function getClient()
+    public function getBook()
     {
-        return $this->client;
+        return $this->book;
     }
 
     /**

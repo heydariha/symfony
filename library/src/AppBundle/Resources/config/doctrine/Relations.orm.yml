@@ -15,11 +15,11 @@ AppBundle\Entity\Relations:
             column: rel_date
     lifecycleCallbacks: {  }
     manyToOne:
-        client:
-            targetEntity: Client
+        book:
+            targetEntity: Book
             inversedBy: relation
             joinColumn:
-                name: client_id
+                name: book_id
                 referenceColumnName: id
         genre:
             targetEntity: Genre

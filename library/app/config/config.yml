@@ -76,3 +76,11 @@ fos_user:
             from_email:
                 address: "heydariham@gmail.com"
                 sender_name: "Hadi Heydari"
+
+# DoctrineMigrationsBundle
+doctrine_migrations:
+    dir_name: "%kernel.root_dir%/DoctrineMigrations"
+    namespace: Application\Migrations
+    table_name: migration_versions
+    name: Application Migrations
+    organize_migrations: false # Version >=1.2 Possible values are: "BY_YEAR", "BY_YEAR_AND_MONTH", false

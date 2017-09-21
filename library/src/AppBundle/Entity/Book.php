@@ -3,9 +3,9 @@
 namespace AppBundle\Entity;
 
 /**
- * Client
+ * Book
  */
-class Client
+class Book
 {
     /**
      * @var int
@@ -43,7 +43,7 @@ class Client
      *
      * @param string $bname
      *
-     * @return Client
+     * @return Book
      */
     public function setBname($bname)
     {
@@ -67,7 +67,7 @@ class Client
      *
      * @param \DateTime $breleased
      *
-     * @return Client
+     * @return Book
      */
     public function setBreleased($breleased)
     {
@@ -91,7 +91,7 @@ class Client
      *
      * @param integer $blength
      *
-     * @return Client
+     * @return Book
      */
     public function setBlength($blength)
     {
@@ -127,7 +127,7 @@ class Client
      *
      * @param \AppBundle\Entity\Relations $relation
      *
-     * @return Client
+     * @return Book
      */
     public function addRelation(\AppBundle\Entity\Relations $relation)
     {

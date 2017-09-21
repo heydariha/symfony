@@ -1,7 +1,7 @@
-AppBundle\Entity\Client:
+AppBundle\Entity\Book:
     type: entity
     table: null
-    repositoryClass: AppBundle\Repository\ClientRepository
+    repositoryClass: AppBundle\Repository\BookRepository
     id:
         id:
             type: integer
@@ -20,4 +20,4 @@ AppBundle\Entity\Client:
     oneToMany:
          relation:
             targetEntity: Relations
-            mappedBy: client
+            mappedBy: book

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block title %}
+	Welcome to Symfony3 by Hadi
+{% endblock %}
+
+{% block body %}
+	<div style="text-align:center;margin-top:180px">
+		<form action="index.php" enctype="multipart/form-data" method="post" accept-charset="utf-8">
+			<div class="row">
+				<div >
+					<input type="text" name="username" id="username" placeholder="username" required Maxlength='200'  class='inp'>
+				</div>
+				<br>
+				<div >
+					<input type="password" name="Position" id="Position" placeholder="Password" required Maxlength='200'  class='inp'>
+				</div>
+				<br>
+			</div>
+			<div >
+				<div >
+					<button type='submit' class='btn'>Login</button>
+				</div>
+			</div>
+		</form>
+	</div>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+	.inp{
+		width:350px;
+		border-radius:3px;
+		height:25px;
+		border:1px gray solid;
+	}
+	.btn{
+		width:150px;
+		border-radius:3px;
+		height:35px;
+		border:1px gray solid;
+		margin-top:5px;
+	}
+</style>
+{% endblock %}
