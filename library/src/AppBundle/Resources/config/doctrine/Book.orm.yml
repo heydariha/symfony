@@ -18,6 +18,9 @@ AppBundle\Entity\Book:
             type: integer
     lifecycleCallbacks: {  }
     oneToMany:
-         relation:
+        relation:
             targetEntity: Relations
+            mappedBy: book
+        user_book:
+            targetEntity: Userbook
             mappedBy: book

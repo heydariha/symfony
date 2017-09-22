@@ -1,0 +1,24 @@
+AppBundle\Entity\Userbook:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\UserbookRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    lifecycleCallbacks: {  }
+    manyToOne:
+        book:
+            targetEntity: Book
+            inversedBy: user_book
+            joinColumn:
+                name: book_id
+                referenceColumnName: id
+        user:
+            targetEntity: User
+            inversedBy: user_book
+            joinColumn:
+                name: user_id
+                referenceColumnName: id

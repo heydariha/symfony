@@ -37,4 +37,49 @@ class User extends BaseUser
 
 
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $userbook;
+
+
+    /**
+     * Add userbook
+     *
+     * @param \AppBundle\Entity\Userbook $userbook
+     *
+     * @return User
+     */
+    public function addUserbook(\AppBundle\Entity\Userbook $userbook)
+    {
+        $this->userbook[] = $userbook;
+
+        return $this;
+    }
+
+    /**
+     * Remove userbook
+     *
+     * @param \AppBundle\Entity\Userbook $userbook
+     */
+    public function removeUserbook(\AppBundle\Entity\Userbook $userbook)
+    {
+        $this->userbook->removeElement($userbook);
+    }
+
+    /**
+     * Get userbook
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUserbook()
+    {
+        return $this->userbook;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $user_book;
+
+
 }

@@ -15,26 +15,51 @@ class DefaultController extends Controller
     {
 		if($this->get('security.authorization_checker')->isGranted('ROLE_USER'))
 		{
-			// $userManager		= $this->container->get('fos_user.user_manager');
-			// $user					= $userManager->findUserByUsername($this->container->get('security.context')->getToken()->getUser());
-			
-			$user = $this->getUser();
+			$userTypeId	= 0;
+			if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
+				$userTypeId	= 1;
+			else
+			if($this->get('security.authorization_checker')->isGranted('ROLE_USER'))
+				$userTypeId	= 2;			
 
-// echo "<pre>";print_r($user);exit;
-// echo ":".$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN');exit;
-			$userId					= $user->getId();
-			return $this->render('book/books.html.twig', ['base_dir' => "mirrravad"]);	
+		$em = $this->getDoctrine()->getEntityManager();
+		$query = $em->createQuery('SELECT b,r,g FROM AppBundle:Book b
+													JOIN b.relation r
+													JOIN r.genre g
+													JOIN b.user_book ub
+													WHERE ub.user = :bId')->setParameter('bId', $userTypeId);
+		$books = $query->getArrayResult();		
+// echo "<pre>";print_r($books);exit;
+			$data['books']	= $books;
+			return $this->render('book/books.html.twig', $data);
 		}
 		else
 		{
 			return $this->redirect('login');
 		}
+    }
+	
+	
+    /**
+     * @Route("/book/{book_name}", name="book")
+     */
+    public function showDetails(Request $request,$book_name)
+    {
+		if($this->get('security.authorization_checker')->isGranted('ROLE_USER'))
+		{
+echo $book_name;
+exit;
+// echo "<pre>";print_r($user);exit;
+			// $repository		= $this->getDoctrine()->getRepository('AppBundle:Book');
+			// $book				= $repository->findAll();
 			
-			
-			
-			
-		
-        // replace this example code with whatever you need
-        // return $this->render('default/index.html.twig', ['base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,]);
+
+			$data['books']	= $book;
+			return $this->render('book/books.html.twig', $data);
+		}
+		else
+		{
+			return $this->redirect('login');
+		}
     }
 }

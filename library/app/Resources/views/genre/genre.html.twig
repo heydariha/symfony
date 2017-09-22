@@ -8,6 +8,7 @@
 
 <div style="width:100%">
 	<div style="margin-left:20px;float:left">
+		<a href="{{ path("homepage") }}">Books</a>
 	</div>
 	<div style="margin-right:20px;float:right">
 		<a href="{{ path('fos_user_security_logout') }}">Logout</a>
@@ -15,26 +16,19 @@
 </div>
 
 <center>
-	<table style="border:1px orange solid;border-radius:3px">
-		<tr>
-			<th class="rowTh">Name</th>
-			<th class="rowTh">Release Date</th>
-			<th class="rowTh">Length</th>
-			<th class="rowTh"></th>
-		</tr>
-	{% for book in books %}
-		<tr>
-			<td class="rowTd" style="text-align:left"><a href="{{ path("book", {'book_name':book.bname}) }}">{{ book.bname }}</a></td>
-			<td class="rowTd">{{ book.breleased | date("m/d/Y") }}</td>
-			<td class="rowTd">{{ book.blength | number_format}}</td>
-			<td class="rowTd">
+	<div>
+		<br>
+		<table style="border:1px orange solid;border-radius:3px">
+			<tr>
+				<th class="rowTh">{{ books[0].bname }}</th>
+			</tr>
+				{% for book in books %}
 					{% for genre in book.relation %}
-						<a href="{{ path("genre", {'genre_name':genre.genre['gname']}) }}">{{ genre.genre['gname'] }}</a><br>
+						<tr><td class='rowTd'>{{ genre.genre['gname'] }}</td></tr>
 					{% endfor %}
-			</td>			
-		</tr>
-	{% endfor %}
-	</table>
+				{% endfor %}
+		</table>
+	</div>
 </center>
 	
 {% endblock %}

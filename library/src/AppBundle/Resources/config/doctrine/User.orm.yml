@@ -9,3 +9,7 @@ AppBundle\Entity\User:
             generator:
                 strategy: AUTO
     lifecycleCallbacks: {  }
+    oneToMany:
+         user_book:
+            targetEntity: Userbook
+            mappedBy: user
