@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	Book's List
+	Book's info
 {% endblock %}
 
 {% block body %}
 
 <div style="width:100%">
 	<div style="margin-left:20px;float:left">
+		<a href="{{ path("home") }}">Books</a>
 	</div>
 	<div style="margin-right:20px;float:right">
 		<a href="{{ path('fos_user_security_logout') }}">Logout</a>
@@ -17,19 +18,35 @@
 <center>
 	<table style="border:1px orange solid;border-radius:3px">
 		<tr>
-			<th class="rowTh">Name</th>
-			<th class="rowTh">Release Date</th>
-			<th class="rowTh">Length</th>
-			<th class="rowTh"></th>
+			<th class="rowTh">Parameter</th>
+			<th class="rowTh">Value(s)</th>
 		</tr>
 	{% for book in books %}
 		<tr>
-			<td class="rowTd" style="text-align:left"><a href="{{ path("book", {'book_name':book.bname}) }}">{{ book.bname }}</a></td>
+			<th class="rowTh">Name:</th>
+			<td class="rowTd" >{{ book.bname }}</td>
+		</tr>
+		</tr>
+			<th class="rowTh">Release Date:</th>
 			<td class="rowTd">{{ book.breleased | date("m/d/Y") }}</td>
+		</tr>
+		</tr>
+			<th class="rowTh">Length:</th>
 			<td class="rowTd">{{ book.blength | number_format}}</td>
+		</tr>
+		</tr>
+			<th class="rowTh">Genre(s) :</th>
 			<td class="rowTd">
 					{% for genre in book.relation %}
-						<a href="{{ path("genre", {'genre_name':genre.genre['gname']}) }}">{{ genre.genre['gname'] }}</a><br>
+						{{ genre.genre['gname'] }}<br>
+					{% endfor %}
+			</td>			
+		</tr>
+		</tr>
+			<th class="rowTh">Accessible for :</th>
+			<td class="rowTd">
+					{% for genre in book.user_book %}
+						{{ genre.user['username'] }}<br>
 					{% endfor %}
 			</td>			
 		</tr>
@@ -50,7 +67,7 @@
 	}
 	.rowTd{
 		text-align:center;
-		width:200px;
+		width:300px;
 		height:35px;
 		border-bottom:1px gray solid;
 	}

@@ -8,7 +8,7 @@
 
 <div style="width:100%">
 	<div style="margin-left:20px;float:left">
-		<a href="{{ path("homepage") }}">Books</a>
+		<a href="{{ path("home") }}">Books</a>
 	</div>
 	<div style="margin-right:20px;float:right">
 		<a href="{{ path('fos_user_security_logout') }}">Logout</a>
@@ -20,12 +20,19 @@
 		<br>
 		<table style="border:1px orange solid;border-radius:3px">
 			<tr>
-				<th class="rowTh">{{ books[0].bname }}</th>
+				<th class="rowTh" colspan=3>{{ books[0].gname }}</th>
 			</tr>
-				{% for book in books %}
-					{% for genre in book.relation %}
-						<tr><td class='rowTd'>{{ genre.genre['gname'] }}</td></tr>
-					{% endfor %}
+			<tr>
+				<th class="rowTh" >Name</th>
+				<th class="rowTh" >Release Date</th>
+				<th class="rowTh" >Length</th>
+			</tr>
+				{% for rel in books[0]['relation'] %}
+						<tr>
+							<td class='rowTd'>{{ rel.book.bname }}</td>
+							<td class='rowTd'>{{ rel.book.breleased | date("m/d/Y")  }}</td>
+							<td class='rowTd'>{{ rel.book.blength }}</td>
+						</tr>
 				{% endfor %}
 		</table>
 	</div>

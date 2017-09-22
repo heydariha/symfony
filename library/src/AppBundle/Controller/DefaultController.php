@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/", name="home")
      */
     public function indexAction(Request $request)
     {
@@ -45,21 +45,18 @@ class DefaultController extends Controller
      */
     public function showDetails(Request $request,$book_name)
     {
-		if($this->get('security.authorization_checker')->isGranted('ROLE_USER'))
-		{
-echo $book_name;
-exit;
-// echo "<pre>";print_r($user);exit;
-			// $repository		= $this->getDoctrine()->getRepository('AppBundle:Book');
-			// $book				= $repository->findAll();
-			
+		if(!$this->get('security.authorization_checker')->isGranted('ROLE_USER'))	return $this->redirect('login');
 
-			$data['books']	= $book;
-			return $this->render('book/books.html.twig', $data);
-		}
-		else
-		{
-			return $this->redirect('login');
-		}
+		$em = $this->getDoctrine()->getEntityManager();
+		$query = $em->createQuery('SELECT b,r,g,ub,u FROM AppBundle:Book b
+													JOIN b.relation r
+													JOIN r.genre g
+													JOIN b.user_book ub
+													JOIN ub.user u
+													WHERE b.bname = :bId')->setParameter('bId', $book_name);
+		$books = $query->getArrayResult();		
+// echo "<pre>";print_r($books);exit;
+		$data['books']	= $books;
+		return $this->render('book/detail.html.twig', $data);
     }
 }
