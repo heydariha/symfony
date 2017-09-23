@@ -1,17 +1,20 @@
 <?php
 
 namespace AppBundle\Controller;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+//use Doctrine\ORM\Query\ResultSetMapping;//$this->_em->createNativeQuery('SELECT * FROM user WHERE', $page);
+// use Doctrine\DBAL\DriverManager;
+// use Doctrine\DBAL\Connection;
+
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="home")
+     * @Route("/{page}", name="home")
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request,$page=0)
     {
 		if($this->get('security.authorization_checker')->isGranted('ROLE_USER'))
 		{
@@ -20,17 +23,44 @@ class DefaultController extends Controller
 				$userTypeId	= 1;
 			else
 			if($this->get('security.authorization_checker')->isGranted('ROLE_USER'))
-				$userTypeId	= 2;			
+				$userTypeId	= 2;
+				
 
+$em = $this->getDoctrine()->getEntityManager();
+$qb = $em->createQueryBuilder();
+$qb->select('b')
+   ->from('AppBundle:Book', 'b')
+   ->innerJoin('b.relation', 'r')
+   // ->innerJoin('r.genre', 'g')
+   // ->innerJoin('b.user_book', 'ub')
+   // ->where('ub.user = :userType')
+   // ->orderBy('b.id', 'ASC')
+   ->setFirstResult( intval(10) )
+   ->setMaxResults( 5 );
+   // ->setParameter('userType', $userTypeId);
+   
+echo $qb->getDql();exit;   
+
+$query = $qb->getQuery();
+$array = $query->getArrayResult();
+echo "<pre>";print_r($array);exit;
+
+				
 		$em = $this->getDoctrine()->getEntityManager();
-		$query = $em->createQuery('SELECT b,r,g FROM AppBundle:Book b
-													JOIN b.relation r
-													JOIN r.genre g
-													JOIN b.user_book ub
-													WHERE ub.user = :bId')->setParameter('bId', $userTypeId);
-		$books = $query->getArrayResult();		
-// echo "<pre>";print_r($books);exit;
-			$data['books']	= $books;
+		$query = $em->createQuery('SELECT b,r,g,ub FROM AppBundle:Book b
+													INNER JOIN b.relation r
+													INNER JOIN r.genre g
+													INNER JOIN b.user_book ub
+													WHERE ub.user = :bId ')->
+													setParameter('bId', $userTypeId)->
+													setFirstResult(intval(10))->
+													setMaxResults(5);
+		$books = $query->getArrayResult();
+// echo count($books);exit;
+echo "<pre>";print_r($books);exit;
+			$data['books']			= $books;
+			$data['prev']				= $page-1;
+			$data['next']				= $page+1;
 			return $this->render('book/books.html.twig', $data);
 		}
 		else

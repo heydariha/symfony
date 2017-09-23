@@ -34,6 +34,18 @@
 			</td>			
 		</tr>
 	{% endfor %}
+		<tr>
+			<th colspan=3>
+
+				{% if prev >= 0 %}
+					<a href="{{ path("home", {'page':prev}) }}">< Prev Page </a>
+				{% endif %}
+
+				{% if next >= 0 %}
+					<a href="{{ path("home", {'page':next}) }}">Next Page > </a>
+				{% endif %}
+			</th>
+		<tr>
 	</table>
 </center>
 	
