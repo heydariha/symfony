@@ -14,7 +14,7 @@ class DefaultController extends Controller
     /**
      * @Route("/", name="home")
      */
-    public function indexAction(Request $request , $page=0)
+    public function indexAction(Request $request , $page=0 , $rows =0 )
     {
 		if($this->get('security.authorization_checker')->isGranted('ROLE_USER'))
 		{
@@ -25,7 +25,7 @@ class DefaultController extends Controller
 			if($this->get('security.authorization_checker')->isGranted('ROLE_USER'))
 				$userTypeId	= 2;
 				
-
+			$maxRow			= $rows > 0 ? $rows : $this->container->getParameter('num_items');
 			$em = $this->getDoctrine()->getEntityManager();
 			$qb = $em->createQueryBuilder();
 			$qb->select('b,r,g,group_concat(g.gname) AS gname,ub')
@@ -37,16 +37,16 @@ class DefaultController extends Controller
 					->where('ub.user = :userType')
 					->orderBy('b.id', 'ASC')
 					->groupBy('b.id')
-					->setFirstResult( intval($page*$this->container->getParameter('num_items')) )
-					->setMaxResults( $this->container->getParameter('num_items') )
+					->setFirstResult( intval($page*$maxRow) )
+					->setMaxResults( $maxRow )
 					->setParameter('userType', $userTypeId);
 			// echo $qb->getDql();exit; 
 			$query	= $qb->getQuery();
 			$array	= $query->getArrayResult();
 			$data['books']			= $array;
 			$data['prev']				= $page-1;
-			$data['next']				= (count($array)< $this->container->getParameter('num_items') ) ? '-1' : $page+1;
-			$data['num_items']		= $this->container->getParameter('num_items');
+			$data['next']				= (count($array)< $maxRow ) ? '-1' : $page+1;
+			$data['num_items']		= $maxRow;
 			return $this->render('book/books.html.twig', $data);
 		}
 		else
@@ -54,6 +54,14 @@ class DefaultController extends Controller
 			return $this->redirect('login');
 		}
     }
+	
+    /**
+     * @Route("/more", name="loadMore")
+     */
+    public function moreAction(Request $request)
+	{
+		return $this->indexAction($request , 0,10);
+	}	
 	
     /**
      * @Route("/pager{page_no}", name="pager")
