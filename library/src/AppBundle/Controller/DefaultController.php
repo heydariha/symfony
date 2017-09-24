@@ -14,7 +14,7 @@ class DefaultController extends Controller
     /**
      * @Route("/", name="home")
      */
-    public function indexAction(Request $request,$page=0)
+    public function indexAction(Request $request , $page=0)
     {
 		if($this->get('security.authorization_checker')->isGranted('ROLE_USER'))
 		{
@@ -37,15 +37,16 @@ class DefaultController extends Controller
 					->where('ub.user = :userType')
 					->orderBy('b.id', 'ASC')
 					->groupBy('b.id')
-					->setFirstResult( intval($page*5) )
-					->setMaxResults( 5 )
+					->setFirstResult( intval($page*$this->container->getParameter('num_items')) )
+					->setMaxResults( $this->container->getParameter('num_items') )
 					->setParameter('userType', $userTypeId);
 			// echo $qb->getDql();exit; 
 			$query	= $qb->getQuery();
 			$array	= $query->getArrayResult();
 			$data['books']			= $array;
 			$data['prev']				= $page-1;
-			$data['next']				= (count($array)< 5 ) ? '-1' : $page+1;
+			$data['next']				= (count($array)< $this->container->getParameter('num_items') ) ? '-1' : $page+1;
+			$data['num_items']		= $this->container->getParameter('num_items');
 			return $this->render('book/books.html.twig', $data);
 		}
 		else
