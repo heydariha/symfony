@@ -28,7 +28,7 @@ class GenreController extends Controller
 													JOIN g.relation r
 													JOIN r.book b
 													JOIN b.user_book ub
-													WHERE g.gname = :bId AND ub.user = '.$userTypeId)->setParameter('bId', $genre_name);
+													WHERE g.gname = :bId AND ub.user = :userType')->setParameter('bId', $genre_name)->setParameter('userType', $userTypeId);
 		$books = $query->getArrayResult();
 // echo "<pre>";print_r($books);exit;
 

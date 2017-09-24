@@ -10,9 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 // use Doctrine\DBAL\Connection;
 
 class DefaultController extends Controller
-{
+{	
     /**
-     * @Route("/{page}", name="home")
+     * @Route("/", name="home")
      */
     public function indexAction(Request $request,$page=0)
     {
@@ -26,41 +26,26 @@ class DefaultController extends Controller
 				$userTypeId	= 2;
 				
 
-$em = $this->getDoctrine()->getEntityManager();
-$qb = $em->createQueryBuilder();
-$qb->select('b')
-   ->from('AppBundle:Book', 'b')
-   ->innerJoin('b.relation', 'r')
-   // ->innerJoin('r.genre', 'g')
-   // ->innerJoin('b.user_book', 'ub')
-   // ->where('ub.user = :userType')
-   // ->orderBy('b.id', 'ASC')
-   ->setFirstResult( intval(10) )
-   ->setMaxResults( 5 );
-   // ->setParameter('userType', $userTypeId);
-   
-echo $qb->getDql();exit;   
-
-$query = $qb->getQuery();
-$array = $query->getArrayResult();
-echo "<pre>";print_r($array);exit;
-
-				
-		$em = $this->getDoctrine()->getEntityManager();
-		$query = $em->createQuery('SELECT b,r,g,ub FROM AppBundle:Book b
-													INNER JOIN b.relation r
-													INNER JOIN r.genre g
-													INNER JOIN b.user_book ub
-													WHERE ub.user = :bId ')->
-													setParameter('bId', $userTypeId)->
-													setFirstResult(intval(10))->
-													setMaxResults(5);
-		$books = $query->getArrayResult();
-// echo count($books);exit;
-echo "<pre>";print_r($books);exit;
-			$data['books']			= $books;
+			$em = $this->getDoctrine()->getEntityManager();
+			$qb = $em->createQueryBuilder();
+			$qb->select('b,r,g,group_concat(g.gname) AS gname,ub')
+					->from('AppBundle:Book', 'b')
+					->innerJoin('b.relation', 'r')
+					->innerJoin('r.genre', 'g')
+					->innerJoin('b.user_book', 'ub')
+					// ->innerJoin('ub.user', 'u')
+					->where('ub.user = :userType')
+					->orderBy('b.id', 'ASC')
+					->groupBy('b.id')
+					->setFirstResult( intval($page*5) )
+					->setMaxResults( 5 )
+					->setParameter('userType', $userTypeId);
+			// echo $qb->getDql();exit; 
+			$query	= $qb->getQuery();
+			$array	= $query->getArrayResult();
+			$data['books']			= $array;
 			$data['prev']				= $page-1;
-			$data['next']				= $page+1;
+			$data['next']				= (count($array)< 5 ) ? '-1' : $page+1;
 			return $this->render('book/books.html.twig', $data);
 		}
 		else
@@ -69,13 +54,20 @@ echo "<pre>";print_r($books);exit;
 		}
     }
 	
+    /**
+     * @Route("/pager{page_no}", name="pager")
+     */
+    public function pagerAction(Request $request,$page_no)
+	{
+		return $this->indexAction($request , $page_no);
+	}
 	
     /**
      * @Route("/book/{book_name}", name="book")
      */
     public function showDetails(Request $request,$book_name)
     {
-		if(!$this->get('security.authorization_checker')->isGranted('ROLE_USER'))	return $this->redirect('login');
+		if(!$this->get('security.authorization_checker')->isGranted('ROLE_USER'))	return $this->redirect('../login');
 
 		$em = $this->getDoctrine()->getEntityManager();
 		$query = $em->createQuery('SELECT b,r,g,ub,u FROM AppBundle:Book b

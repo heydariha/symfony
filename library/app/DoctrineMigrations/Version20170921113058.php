@@ -29,7 +29,7 @@ class Version20170921113058 extends AbstractMigration
         $this->addSql('ALTER TABLE userbook ADD CONSTRAINT FK_6D98DB40A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
 		
 		
-        $this->addSql("INSERT INTO book (id, bname, breleased, blength) VALUES (1,'Doctor WithBig Eyes','2016-02-01',200),(2,'Hunger OfMy Town','2016-05-02',10),(3,'Colleagues And Demons','2015-04-06',30),(4,'Humans In The Library','1982-06-15',600),(5,'Founders Of Evil','1530-08-30',900),(6,'Ancestor With Horns','2019-10-10',1000),(7,'Age Of The Light','1923-12-06',234),(8,'Learning With TheRiver','1965-02-02',200),(9,'Lord And Buffoon','2001-07-09',240)");
+        $this->addSql("INSERT INTO book (id, bname, breleased, blength) VALUES (1,'Doctor With Big Eyes','2016-02-01',200),(2,'Hunger Of My Town','2016-05-02',10),(3,'Colleagues And Demons','2015-04-06',30),(4,'Humans In The Library','1982-06-15',600),(5,'Founders Of Evil','1530-08-30',900),(6,'Ancestor With Horns','2019-10-10',1000),(7,'Age Of The Light','1923-12-06',234),(8,'Learning With The River','1965-02-02',200),(9,'Lord And Buffoon','2001-07-09',240)");
         $this->addSql("INSERT INTO genre (id, gname) VALUES(1,'Police'),(2,'Comedy'),(3,'Drama'),(4,'Non-fiction'),(5,'Horror'),(6,'Tragedy'),(7,'Children'),(8,'Fiction'),(9,'Satire')");
         $this->addSql("INSERT INTO relations (id, book_id, genre_id, rel_date) VALUES (1,1,1,NULL),(2,2,2,NULL),(3,3,3,NULL),(4,4,4,NULL),(5,4,5,NULL),(6,5,3,NULL),(7,6,3,NULL),(8,7,6,NULL),(9,8,7,NULL),(19,8,8,NULL),(20,9,5,NULL),(21,9,9,NULL)");		
         $this->addSql("INSERT INTO user (id, username, username_canonical, email, email_canonical, enabled, salt, password, last_login, confirmation_token, password_requested_at, roles) VALUES

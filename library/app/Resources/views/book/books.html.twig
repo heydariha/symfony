@@ -24,25 +24,26 @@
 		</tr>
 	{% for book in books %}
 		<tr>
-			<td class="rowTd" style="text-align:left"><a href="{{ path("book", {'book_name':book.bname}) }}">{{ book.bname }}</a></td>
-			<td class="rowTd">{{ book.breleased | date("m/d/Y") }}</td>
-			<td class="rowTd">{{ book.blength | number_format}}</td>
+			<td class="rowTd" style="text-align:left"><a href="{{ path("book", {'book_name':book[0].bname}) }}">{{ book[0].bname }}</a></td>
+			<td class="rowTd">{{ book[0].breleased | date("m/d/Y") }}</td>
+			<td class="rowTd">{{ book[0].blength | number_format}}</td>
 			<td class="rowTd">
-					{% for genre in book.relation %}
-						<a href="{{ path("genre", {'genre_name':genre.genre['gname']}) }}">{{ genre.genre['gname'] }}</a><br>
-					{% endfor %}
-			</td>			
+				{% set genres = book.gname|split(',') %}
+				{% for item in genres %}
+					<a href="{{ path("genre", {'genre_name':item}) }}"> {{item}} </a>&nbsp;
+				{% endfor %}
+			</td>
 		</tr>
 	{% endfor %}
 		<tr>
 			<th colspan=3>
 
 				{% if prev >= 0 %}
-					<a href="{{ path("home", {'page':prev}) }}">< Prev Page </a>
+					<a href="{{ path("pager", {'page_no':prev}) }}">< Prev Page </a>
 				{% endif %}
 
 				{% if next >= 0 %}
-					<a href="{{ path("home", {'page':next}) }}">Next Page > </a>
+					<a href="{{ path("pager", {'page_no':next}) }}">Next Page > </a>
 				{% endif %}
 			</th>
 		<tr>
